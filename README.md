@@ -8,6 +8,10 @@ An internship-style, production-minded prototype: ingest invoice ledgers, apply 
 
 [Finance Credit Follow-Up Email Agent](https://finance-email-agent-elbanne2m3apnlajuqek7n.streamlit.app/)
 
+## Demo Video
+
+[![Watch Demo](docs/workbench.png)](https://drive.google.com/file/d/1zgG1k-qCpW6q3vyW9yoTdFme7ZRPPMIk/view?usp=drive_link)
+
 ### Features Available in Live Demo
 - Upload CSV / Excel invoice datasets
 - Automatic escalation stage assignment

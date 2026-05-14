@@ -138,15 +138,26 @@ def _inject_css() -> None:
           [data-testid="stSidebar"] [data-testid="stCaption"] {
             color: rgba(255,255,255,0.88) !important;
           }
-          [data-testid="stSidebar"] .stMarkdown a { color: #93c5fd !important; }
-          [data-testid="stSidebar"] label,
-          [data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
-          [data-testid="stSidebar"] [data-testid="stWidgetLabel"] span {
-            color: rgba(255,255,255,0.78) !important;
-          }
-          [data-testid="stSidebar"] hr {
-            border-color: rgba(255,255,255,0.12);
-          }
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] .stRadio label,
+        [data-testid="stSidebar"] .stCheckbox label,
+        [data-testid="stSidebar"] .stToggle label,
+        [data-testid="stSidebar"] [data-testid="stWidgetLabel"],
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] span {
+           color: #f8fafc !important;
+           opacity: 1 !important;
+           visibility: visible !important;
+           font-weight: 500 !important;
+        }
+
+        [data-testid="stSidebar"] * {
+           text-shadow: none !important;
+        }
+
+        [data-testid="stSidebar"] hr {
+           border-color: rgba(255,255,255,0.12);
+        }
           /* Inputs must stay dark-on-light so date + model values remain visible */
           [data-testid="stSidebar"] input,
           [data-testid="stSidebar"] textarea,

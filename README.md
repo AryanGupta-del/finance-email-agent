@@ -4,12 +4,30 @@ An internship-style, production-minded prototype: ingest invoice ledgers, apply 
 
 ## Screenshots (portfolio)
 
-After you run the app, capture:
+### Workbench Dashboard
 
-1. **Workbench** — upload/preview + metrics + chart + generation  
-2. **Audit & exports** — downloads + audit preview  
+![Workbench Dashboard](docs/workbench.png)
 
-Embed the images here in your fork (GitHub README), for example `![Workbench](docs/workbench.png)`.
+Features shown:
+- Invoice ingestion pipeline
+- Escalation stage filtering
+- Professional receivables dashboard
+- Dry-run simulation controls
+- Gemini model integration
+- Executive UI metrics
+
+---
+
+### Audit & Exports Console
+
+![Audit and Exports](docs/audit_exports.png)
+
+Features shown:
+- Audit CSV export
+- JSONL compliance logs
+- Downloadable generation artifacts
+- Compliance-friendly previews
+- Local-first secure processing
 
 ## Project overview
 

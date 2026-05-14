@@ -1,0 +1,13 @@
+invoice_number,client_name,amount_due,due_date,contact_email,follow_up_count,payment_instructions
+INV-2026-0101,Northwind Trading LLC,1840.50,2026-05-13,ar@northwind.example.com,0,"Wire to Acme Finance: Routing 021000021 / Account ending 4421. Reference: invoice number."
+INV-2026-0102,Brightline Analytics Inc,925.00,2026-05-10,billing@brightline.example.com,1,"ACH remittance email: remit@acmefinance.example.com (include invoice # in memo)."
+INV-2026-0103,Harbor City Dental Group,412.75,2026-05-07,office@harborcitydental.example.com,2,
+INV-2026-0104,Cedar Ridge Construction,12650.00,2026-05-06,ap@cedarridge.example.com,0,"Portal pay: https://pay.example.com/portal (login required)."
+INV-2026-0105,Pacific Pet Supplies,333.10,2026-04-30,accounts@pacificpets.example.com,3,
+INV-2026-0106,Urban Bean Coffee Co,1889.99,2026-04-28,finance@urbanbean.example.com,1,"Card payment link will be sent upon request; reply to this thread."
+INV-2026-0107,Summit Legal Partners,7600.00,2026-04-23,billing@summitlegal.example.com,4,
+INV-2026-0108,Greenfield Solar Co,22115.40,2026-04-22,ap@greenfieldsolar.example.com,2,"Wire instructions available in vendor portal message #INV-2026-0108."
+INV-2026-0109,Metro Transit Authority,980.00,2026-04-15,procurement@metrotransit.example.gov,5,
+INV-2026-0110,Old Harbor Shipwrights,15440.00,2026-03-10,finance@oldharbor.example.com,6,"Collections hold: do not accept partial payment without approval."
+INV-2026-0111,FutureWorks Software,500.00,2026-05-20,billing@futureworks.example.com,0,
+INV-2026-0112,QuickPay Retail Group,129.49,2026-05-14,cashier@quickpay.example.com,0,

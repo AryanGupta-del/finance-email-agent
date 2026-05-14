@@ -1,0 +1,6 @@
+invoice_number,client_name,amount_due,due_date,contact_email,follow_up_count,payment_instructions
+DEMO-001,Aurora Design Studio,450.00,2026-05-13,billing@aurora-design.example.com,0,"Pay online at https://pay.example.com/aurora — reference the invoice number."
+DEMO-002,Riverstone Logistics,2100.50,2026-05-05,ap@riverstone.example.com,1,
+DEMO-003,Beacon Health Clinic,319.99,2026-04-20,finance@beaconhealth.example.com,2,"Reply to this email for ACH/wire instructions."
+DEMO-004,Atlas Manufacturing Ltd,9800.00,2026-02-01,treasury@atlas-mfg.example.com,4,"Escalated account — contact collections before accepting payment."
+DEMO-005,ClearSky SaaS Inc,1200.00,2026-06-15,accounts@clearsky.example.com,0,

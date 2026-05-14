@@ -1,0 +1,122 @@
+[
+  {
+    "invoice_number": "INV-2026-0110",
+    "client_name": "Old Harbor Shipwrights",
+    "contact_email": "finance@oldharbor.example.com",
+    "escalation_stage": 5,
+    "tone": "Legal / Manual Review",
+    "days_overdue": 65,
+    "subject": "",
+    "body": "",
+    "status": "FLAGGED_LEGAL_REVIEW_NO_EMAIL",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0109",
+    "client_name": "Metro Transit Authority",
+    "contact_email": "procurement@metrotransit.example.gov",
+    "escalation_stage": 4,
+    "tone": "Stern & Urgent",
+    "days_overdue": 29,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0108",
+    "client_name": "Greenfield Solar Co",
+    "contact_email": "ap@greenfieldsolar.example.com",
+    "escalation_stage": 4,
+    "tone": "Stern & Urgent",
+    "days_overdue": 22,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0107",
+    "client_name": "Summit Legal Partners",
+    "contact_email": "billing@summitlegal.example.com",
+    "escalation_stage": 3,
+    "tone": "Formal & Serious",
+    "days_overdue": 21,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0106",
+    "client_name": "Urban Bean Coffee Co",
+    "contact_email": "finance@urbanbean.example.com",
+    "escalation_stage": 3,
+    "tone": "Formal & Serious",
+    "days_overdue": 16,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0105",
+    "client_name": "Pacific Pet Supplies",
+    "contact_email": "accounts@pacificpets.example.com",
+    "escalation_stage": 2,
+    "tone": "Polite but Firm",
+    "days_overdue": 14,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0104",
+    "client_name": "Cedar Ridge Construction",
+    "contact_email": "ap@cedarridge.example.com",
+    "escalation_stage": 2,
+    "tone": "Polite but Firm",
+    "days_overdue": 8,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0103",
+    "client_name": "Harbor City Dental Group",
+    "contact_email": "office@harborcitydental.example.com",
+    "escalation_stage": 1,
+    "tone": "Warm & Friendly",
+    "days_overdue": 7,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0102",
+    "client_name": "Brightline Analytics Inc",
+    "contact_email": "billing@brightline.example.com",
+    "escalation_stage": 1,
+    "tone": "Warm & Friendly",
+    "days_overdue": 4,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  },
+  {
+    "invoice_number": "INV-2026-0101",
+    "client_name": "Northwind Trading LLC",
+    "contact_email": "ar@northwind.example.com",
+    "escalation_stage": 1,
+    "tone": "Warm & Friendly",
+    "days_overdue": 1,
+    "subject": "",
+    "body": "",
+    "status": "ERROR: Error calling model 'gemini-1.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}",
+    "dry_run": true
+  }
+]

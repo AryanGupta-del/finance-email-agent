@@ -12,6 +12,10 @@ An internship-style, production-minded prototype: ingest invoice ledgers, apply 
 
 [![Watch Demo](docs/workbench.png)](https://drive.google.com/file/d/1zgG1k-qCpW6q3vyW9yoTdFme7ZRPPMIk/view?usp=drive_link)
 
+## Sample Generated Report
+
+[`report/email_generation_report.json`](report/email_generation_report.json)
+
 ### Features Available in Live Demo
 - Upload CSV / Excel invoice datasets
 - Automatic escalation stage assignment

@@ -6,7 +6,7 @@ An internship-style, production-minded prototype: ingest invoice ledgers, apply 
 
 ### Workbench Dashboard
 
-![Workbench Dashboard](docs/workbench.png)
+![Workbench Dashboard](docs/workbench.png.png)
 
 Features shown:
 - Invoice ingestion pipeline
@@ -20,7 +20,7 @@ Features shown:
 
 ### Audit & Exports Console
 
-![Audit and Exports](docs/audit_exports.png)
+![Audit and Exports](docs/audit_exports.png.png)
 
 Features shown:
 - Audit CSV export

@@ -2,6 +2,20 @@
 
 An internship-style, production-minded prototype: ingest invoice ledgers, apply a **mandatory rule-based escalation matrix**, draft **personalized** follow-up emails with **Google Gemini**, and keep a **dry-run-first** audit trail. The UI is **Streamlit**; data processing uses **pandas**.
 
+## Live Demo
+
+🚀 Streamlit Deployment:
+
+[Finance Credit Follow-Up Email Agent](https://finance-email-agent-elbanne2m3apnlajuqek7n.streamlit.app/)
+
+### Features Available in Live Demo
+- Upload CSV / Excel invoice datasets
+- Automatic escalation stage assignment
+- Gemini AI-powered email drafting
+- Audit logging and export system
+- Professional receivables dashboard
+- Dry-run simulation workflow
+
 ## Screenshots (portfolio)
 
 ### Workbench Dashboard

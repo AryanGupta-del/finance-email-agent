@@ -20,6 +20,7 @@ from utils.email_generator import generate_follow_up_email
 from utils.escalation import apply_escalation_columns
 from utils.logger import LOG_DIR, export_generated_emails_json, log_generation_event
 from utils.parser import add_days_overdue, load_invoice_file
+from utils.ui_helpers import queue_table_column_config
 
 load_dotenv()
 
@@ -78,9 +79,44 @@ def _inject_css() -> None:
           }
 
           .block-container {
-            padding-top: 1.25rem;
+            padding-top: 0.85rem;
             padding-bottom: 3rem;
-            max-width: 1180px;
+            max-width: 1200px;
+          }
+
+          .top-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            margin: 0 0 0.85rem 0;
+            padding: 0.35rem 0 0.15rem 0;
+          }
+          .top-brand-mark {
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.72rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.04em;
+            box-shadow: 0 8px 20px rgba(29, 78, 216, 0.35);
+          }
+          .top-brand-text {
+            font-size: 0.78rem;
+            color: #475569;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+          }
+          .top-brand-sub {
+            font-size: 0.82rem;
+            color: #64748b;
+            font-weight: 500;
+            margin-left: 0.15rem;
           }
 
           h1, h2, h3 {
@@ -135,36 +171,53 @@ def _inject_css() -> None:
 
           /* Hero */
           .hero {
+            position: relative;
+            overflow: hidden;
             border: 1px solid var(--line);
-            background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.72));
-            box-shadow: var(--shadow);
-            border-radius: 18px;
-            padding: 1.25rem 1.35rem 1.15rem 1.35rem;
-            margin: 0.25rem 0 1.1rem 0;
+            background: linear-gradient(145deg, rgba(255,255,255,0.97), rgba(248,250,252,0.88));
+            box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+            border-radius: 20px;
+            padding: 0;
+            margin: 0.15rem 0 1.25rem 0;
           }
+          .hero::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(180deg, #1d4ed8, #6d28d9);
+            border-radius: 20px 0 0 20px;
+          }
+          .hero-inner { padding: 1.35rem 1.4rem 1.25rem 1.5rem; }
           .hero-kicker {
-            font-size: 0.82rem;
-            color: var(--muted);
-            font-weight: 600;
-            letter-spacing: 0.08em;
+            font-size: 0.78rem;
+            color: #64748b;
+            font-weight: 700;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
           }
           .hero-title {
-            margin: 0.35rem 0 0.35rem 0;
-            font-size: 2.05rem;
-            line-height: 1.1;
+            margin: 0.4rem 0 0.4rem 0;
+            font-size: 2.15rem;
+            line-height: 1.08;
             font-weight: 800;
-            background: linear-gradient(90deg, #0b1220, #1e3a8a);
+            letter-spacing: -0.03em;
+            color: #0f172a;
+          }
+          .hero-title span {
+            background: linear-gradient(90deg, #1e3a8a, #5b21b6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
           }
           .hero-sub {
             margin: 0;
-            color: var(--muted);
-            font-size: 1.02rem;
-            line-height: 1.45;
-            max-width: 78ch;
+            color: #475569;
+            font-size: 1.03rem;
+            line-height: 1.55;
+            max-width: 76ch;
           }
           .hero-badges { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.85rem; }
           .badge {
@@ -220,8 +273,19 @@ def _inject_css() -> None:
             gap: 1rem;
             margin: 0.25rem 0 0.65rem 0;
           }
-          .section-title h3 { margin: 0; font-size: 1.08rem; }
-          .section-title span { color: var(--muted); font-size: 0.92rem; }
+          .section-title h3 { margin: 0; font-size: 1.12rem; font-weight: 700; color: #0f172a; }
+          .section-title span { color: #64748b; font-size: 0.9rem; font-weight: 500; }
+
+          .app-footer {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.8rem;
+            padding: 2.25rem 0.5rem 0.75rem 0.5rem;
+            margin-top: 1.5rem;
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+            letter-spacing: 0.02em;
+          }
+          .app-footer strong { color: #334155; font-weight: 600; }
 
           .panel {
             border: 1px solid var(--line);
@@ -297,19 +361,25 @@ def _prepare_df(raw: pd.DataFrame, as_of: date) -> pd.DataFrame:
 
 
 def _hero(*, key_ok: bool, dry_run: bool, page: str) -> None:
-    page_hint = "Review downloads and audit history." if page == "Audit & exports" else "Upload data, review escalation, then generate drafts."
+    if page == "Audit & exports":
+        sub = "Immutable audit trail, exports, and compliance-friendly previews."
+    else:
+        sub = (
+            "Deterministic collections policy engine with AI-assisted drafting. "
+            "Stages 1–4 use Gemini (via LangChain); stage 5 routes to manual / legal review."
+        )
     st.markdown(
         f"""
         <div class="hero">
-          <div class="hero-kicker">Internship prototype · Accounts receivable automation</div>
-          <div class="hero-title">Finance Credit Follow-Up Email Agent</div>
-          <p class="hero-sub">
-            {page_hint} Escalation is computed with deterministic rules; Gemini drafts language only for stages 1–4.
-          </p>
-          <div class="hero-badges">
-            <span class="badge"><span class="dot {'ok' if dry_run else 'neu'}"></span>Dry run: {'on' if dry_run else 'off'}</span>
-            <span class="badge"><span class="dot {'ok' if key_ok else 'bad'}"></span>Gemini key: {'ready' if key_ok else 'missing'}</span>
-            <span class="badge"><span class="dot neu"></span>Local-first processing</span>
+          <div class="hero-inner">
+            <div class="hero-kicker">Accounts receivable · collections copilot</div>
+            <div class="hero-title"><span>Finance Credit Follow-Up</span> Email Agent</div>
+            <p class="hero-sub">{sub}</p>
+            <div class="hero-badges">
+              <span class="badge"><span class="dot {'ok' if dry_run else 'neu'}"></span>Dispatch mode: {'dry run (simulated)' if dry_run else 'live send off (demo)'}</span>
+              <span class="badge"><span class="dot {'ok' if key_ok else 'bad'}"></span>LLM credentials: {'operational' if key_ok else 'not configured'}</span>
+              <span class="badge"><span class="dot neu"></span>PII-aware logging · masked contacts in audit files</span>
+            </div>
           </div>
         </div>
         """,
@@ -355,19 +425,54 @@ def _section_title(title: str, subtitle: str = "") -> None:
     )
 
 
+def _app_footer() -> None:
+    st.markdown(
+        """
+        <div class="app-footer">
+          <strong>Finance Credit Follow-Up Email Agent</strong> · Portfolio prototype v1.0 ·
+          Rule-based escalation · Gemini + LangChain · Dry-run by default · Not for production legal use
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _top_brand_strip() -> None:
+    st.markdown(
+        """
+        <div class="top-brand">
+          <div class="top-brand-mark">AR</div>
+          <div>
+            <span class="top-brand-text">Receivables console</span>
+            <span class="top-brand-sub">Invoice queue · policy · audit</span>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def main() -> None:
     st.set_page_config(
-        page_title="Finance Credit Follow-Up Agent",
+        page_title="Receivables Follow-Up Agent",
         layout="wide",
         initial_sidebar_state="expanded",
-        page_icon="📬",
+        page_icon="📊",
     )
     _inject_streamlit_secrets_into_env()
     _inject_css()
 
     with st.sidebar:
-        st.markdown("### Finance agent")
-        st.caption("Credit follow-ups · dry-run first")
+        st.markdown(
+            """
+            <div style="margin-bottom:0.75rem;">
+              <div style="font-size:1.05rem;font-weight:800;color:#f8fafc;letter-spacing:-0.02em;">Receivables</div>
+              <div style="font-size:0.78rem;color:rgba(248,250,252,0.65);font-weight:600;text-transform:uppercase;letter-spacing:0.14em;">Control tower</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.caption("Collections queue · policy · audit exports")
         page = st.radio(
             "Navigation",
             ["Workbench", "Audit & exports"],
@@ -402,6 +507,7 @@ def main() -> None:
         if not key_ok:
             st.warning("Create `.env` from `.env.example` and set `GEMINI_API_KEY`.")
 
+    _top_brand_strip()
     _hero(key_ok=key_ok, dry_run=dry_run, page=page)
 
     if page == "Audit & exports":
@@ -459,9 +565,10 @@ def main() -> None:
 
         if audit_csv.exists():
             st.divider()
-            _section_title("Audit preview", "Latest 50 rows")
+            _section_title("Audit preview", "Latest 50 rows · masked identifiers")
             st.dataframe(pd.read_csv(audit_csv).tail(50), use_container_width=True, hide_index=True)
 
+        _app_footer()
         return
 
     # Workbench
@@ -502,7 +609,8 @@ def main() -> None:
 
     if "raw_df" not in st.session_state:
         with st.container(border=True):
-            st.info("Upload a file (left) or tap **Load sample dataset** to begin.")
+            st.info("Upload a CSV or Excel file, or use **Load sample dataset** to load the built-in portfolio sample.")
+        _app_footer()
         return
 
     df = _prepare_df(st.session_state["raw_df"], as_of=as_of)
@@ -549,7 +657,8 @@ def main() -> None:
             view_df[display_cols].sort_values(["escalation_stage", "days_overdue"], ascending=[True, False]),
             use_container_width=True,
             hide_index=True,
-            height=360,
+            height=380,
+            column_config=queue_table_column_config(),
         )
 
     st.divider()
@@ -572,95 +681,19 @@ def main() -> None:
             if len(flagged_rows) + len(gen_rows) == 0:
                 st.warning("No overdue invoices to process for this as-of date.")
             else:
-                progress = st.progress(0, text="Starting…")
-                total = len(flagged_rows) + len(gen_rows)
-                done = 0
+                with st.spinner("Generating personalised drafts and writing audit records…"):
+                    progress = st.progress(0, text="Starting…")
+                    total = len(flagged_rows) + len(gen_rows)
+                    done = 0
 
-                for r in flagged_rows:
-                    log_generation_event(
-                        client_name=str(r["client_name"]),
-                        invoice_number=str(r["invoice_number"]),
-                        escalation_stage=int(r["escalation_stage"]) if pd.notna(r["escalation_stage"]) else None,
-                        tone=str(r["tone"]),
-                        subject="",
-                        send_status="FLAGGED_LEGAL_REVIEW",
-                        overdue_days=int(r["days_overdue"]),
-                        contact_email=str(r["contact_email"]),
-                        dry_run=bool(dry_run),
-                        model=model.strip(),
-                    )
-                    results.append(
-                        {
-                            "invoice_number": r["invoice_number"],
-                            "client_name": r["client_name"],
-                            "contact_email": r["contact_email"],
-                            "escalation_stage": int(r["escalation_stage"]),
-                            "tone": r["tone"],
-                            "days_overdue": int(r["days_overdue"]),
-                            "subject": "",
-                            "body": "",
-                            "status": "FLAGGED_LEGAL_REVIEW_NO_EMAIL",
-                            "dry_run": dry_run,
-                        }
-                    )
-                    done += 1
-                    progress.progress(min(done / total, 1.0), text=f"Flagged {r['invoice_number']}…")
-
-                for r in gen_rows:
-                    due = r["due_date"]
-                    due_for_model = due.date() if hasattr(due, "date") else due
-                    try:
-                        gen = generate_follow_up_email(
-                            client_name=str(r["client_name"]),
-                            invoice_number=str(r["invoice_number"]),
-                            amount_due=float(r["amount_due"]),
-                            due_date=due_for_model,
-                            days_overdue=int(r["days_overdue"]),
-                            escalation_stage=int(r["escalation_stage"]),
-                            follow_up_count=int(r["follow_up_count"]),
-                            contact_email=str(r["contact_email"]),
-                            payment_instructions=str(r.get("payment_instructions", "") or ""),
-                            model=model.strip(),
-                        )
-
-                        send_status = "DRY_RUN_SIMULATED" if dry_run else "READY_TO_SEND_DISABLED"
+                    for r in flagged_rows:
                         log_generation_event(
                             client_name=str(r["client_name"]),
                             invoice_number=str(r["invoice_number"]),
-                            escalation_stage=int(r["escalation_stage"]),
-                            tone=str(r["tone"]),
-                            subject=gen.subject,
-                            send_status=send_status,
-                            overdue_days=int(r["days_overdue"]),
-                            contact_email=str(r["contact_email"]),
-                            dry_run=bool(dry_run),
-                            model=gen.model,
-                        )
-
-                        results.append(
-                            {
-                                "invoice_number": r["invoice_number"],
-                                "client_name": r["client_name"],
-                                "contact_email": r["contact_email"],
-                                "escalation_stage": int(r["escalation_stage"]),
-                                "tone": r["tone"],
-                                "days_overdue": int(r["days_overdue"]),
-                                "subject": gen.subject,
-                                "body": gen.body,
-                                "status": send_status,
-                                "dry_run": dry_run,
-                                "model": gen.model,
-                            }
-                        )
-                    except Exception as e:
-                        err = str(e)
-                        log_generation_event(
-                            client_name=str(r["client_name"]),
-                            invoice_number=str(r["invoice_number"]),
-                            escalation_stage=int(r["escalation_stage"]),
+                            escalation_stage=int(r["escalation_stage"]) if pd.notna(r["escalation_stage"]) else None,
                             tone=str(r["tone"]),
                             subject="",
-                            send_status=f"ERROR: {err[:120]}",
+                            send_status="FLAGGED_LEGAL_REVIEW",
                             overdue_days=int(r["days_overdue"]),
                             contact_email=str(r["contact_email"]),
                             dry_run=bool(dry_run),
@@ -676,18 +709,95 @@ def main() -> None:
                                 "days_overdue": int(r["days_overdue"]),
                                 "subject": "",
                                 "body": "",
-                                "status": f"ERROR: {err}",
+                                "status": "FLAGGED_LEGAL_REVIEW_NO_EMAIL",
                                 "dry_run": dry_run,
                             }
                         )
+                        done += 1
+                        progress.progress(min(done / total, 1.0), text=f"Flagged {r['invoice_number']}…")
 
-                    done += 1
-                    progress.progress(min(done / total, 1.0), text=f"Processed {r['invoice_number']}…")
+                    for r in gen_rows:
+                        due = r["due_date"]
+                        due_for_model = due.date() if hasattr(due, "date") else due
+                        try:
+                            gen = generate_follow_up_email(
+                                client_name=str(r["client_name"]),
+                                invoice_number=str(r["invoice_number"]),
+                                amount_due=float(r["amount_due"]),
+                                due_date=due_for_model,
+                                days_overdue=int(r["days_overdue"]),
+                                escalation_stage=int(r["escalation_stage"]),
+                                follow_up_count=int(r["follow_up_count"]),
+                                contact_email=str(r["contact_email"]),
+                                payment_instructions=str(r.get("payment_instructions", "") or ""),
+                                model=model.strip(),
+                            )
 
-                progress.progress(1.0, text="Done.")
-                st.session_state["last_results"] = results
-                export_generated_emails_json(results)
-                st.success("Generation complete — audit entries appended under `logs/`.")
+                            send_status = "DRY_RUN_SIMULATED" if dry_run else "READY_TO_SEND_DISABLED"
+                            log_generation_event(
+                                client_name=str(r["client_name"]),
+                                invoice_number=str(r["invoice_number"]),
+                                escalation_stage=int(r["escalation_stage"]),
+                                tone=str(r["tone"]),
+                                subject=gen.subject,
+                                send_status=send_status,
+                                overdue_days=int(r["days_overdue"]),
+                                contact_email=str(r["contact_email"]),
+                                dry_run=bool(dry_run),
+                                model=gen.model,
+                            )
+
+                            results.append(
+                                {
+                                    "invoice_number": r["invoice_number"],
+                                    "client_name": r["client_name"],
+                                    "contact_email": r["contact_email"],
+                                    "escalation_stage": int(r["escalation_stage"]),
+                                    "tone": r["tone"],
+                                    "days_overdue": int(r["days_overdue"]),
+                                    "subject": gen.subject,
+                                    "body": gen.body,
+                                    "status": send_status,
+                                    "dry_run": dry_run,
+                                    "model": gen.model,
+                                }
+                            )
+                        except Exception as e:
+                            err = str(e)
+                            log_generation_event(
+                                client_name=str(r["client_name"]),
+                                invoice_number=str(r["invoice_number"]),
+                                escalation_stage=int(r["escalation_stage"]),
+                                tone=str(r["tone"]),
+                                subject="",
+                                send_status=f"ERROR: {err[:120]}",
+                                overdue_days=int(r["days_overdue"]),
+                                contact_email=str(r["contact_email"]),
+                                dry_run=bool(dry_run),
+                                model=model.strip(),
+                            )
+                            results.append(
+                                {
+                                    "invoice_number": r["invoice_number"],
+                                    "client_name": r["client_name"],
+                                    "contact_email": r["contact_email"],
+                                    "escalation_stage": int(r["escalation_stage"]),
+                                    "tone": r["tone"],
+                                    "days_overdue": int(r["days_overdue"]),
+                                    "subject": "",
+                                    "body": "",
+                                    "status": f"ERROR: {err}",
+                                    "dry_run": dry_run,
+                                }
+                            )
+
+                        done += 1
+                        progress.progress(min(done / total, 1.0), text=f"Processed {r['invoice_number']}…")
+
+                    progress.progress(1.0, text="Done.")
+                    st.session_state["last_results"] = results
+                    export_generated_emails_json(results)
+                    st.success("Generation complete — audit entries appended under `logs/`.")
 
     if "last_results" in st.session_state:
         res = st.session_state["last_results"]
@@ -735,6 +845,8 @@ def main() -> None:
             mime="application/json",
             use_container_width=True,
         )
+
+    _app_footer()
 
 
 if __name__ == "__main__":

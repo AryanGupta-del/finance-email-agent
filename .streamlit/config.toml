@@ -1,0 +1,10 @@
+# Streamlit appearance — professional light theme (edit to taste)
+[theme]
+primaryColor = "#1d4ed8"
+backgroundColor = "#f1f5f9"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#0f172a"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false

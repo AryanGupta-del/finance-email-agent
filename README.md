@@ -114,7 +114,8 @@ flowchart LR
 - **Dry-run by default**: simulates sending, never requires SMTP in the baseline build
 - **Audit logging** to `logs/audit_log.csv` and `logs/audit_log.jsonl` (masked emails; no full bodies in audit files)
 - **Export** of the last generation batch to `logs/generated_emails_export.json` (includes bodies; local download)
-- **Streamlit dashboard**: upload, preview, metrics, charts, filters, flagged section, downloads
+- **Streamlit dashboard**: upload, preview, metrics, charts, filters, flagged section, downloads  
+- **Professional UI**: Streamlit theme (`.streamlit/config.toml`), branded shell, executive hero, formatted data grid, generation spinner, compliance footer
 
 ---
 
@@ -122,10 +123,12 @@ flowchart LR
 
 ```
 app.py                 # Streamlit UI + orchestration
+.streamlit/config.toml # Product theme (colours, fonts)
 utils/parser.py        # CSV/XLSX load, validation, days overdue
 utils/escalation.py    # Deterministic escalation + tones (policy source of truth)
 utils/langchain_agent.py  # LangChain + Gemini structured draft (Pydantic)
 utils/email_generator.py  # Prompts, sanitization, invoke + validate/repair
+utils/ui_helpers.py    # Column configs for professional tables
 utils/logger.py        # Audit CSV/JSONL + export JSON
 sample_data/invoices.csv  # Demo dataset
 logs/                  # Runtime outputs (gitignored patterns for local logs)
@@ -326,6 +329,8 @@ For real sends: use a **verified sender domain** and configure **SPF, DKIM, and 
 
 ```
 finance-email-agent/
+├── .streamlit/
+│   └── config.toml
 ├── app.py
 ├── requirements.txt
 ├── .env.example
@@ -339,6 +344,7 @@ finance-email-agent/
 │   ├── escalation.py
 │   ├── langchain_agent.py
 │   ├── email_generator.py
+│   ├── ui_helpers.py
 │   └── logger.py
 └── sample_data/
     └── invoices.csv

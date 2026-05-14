@@ -26,6 +26,26 @@ load_dotenv()
 SAMPLE_PATH = Path(__file__).resolve().parent / "sample_data" / "invoices.csv"
 
 
+def _inject_streamlit_secrets_into_env() -> None:
+    """
+    Streamlit Community Cloud (and `streamlit run`) expose Deploy secrets via `st.secrets`.
+    Copy into os.environ so `utils/email_generator.py` and LangChain see GEMINI_API_KEY.
+    Local `.env` still works via load_dotenv() above.
+    """
+    try:
+        sec = st.secrets
+    except Exception:
+        return
+    for key in ("GEMINI_API_KEY", "GEMINI_MODEL", "USE_LANGCHAIN"):
+        if os.getenv(key):
+            continue
+        try:
+            if key in sec and str(sec[key]).strip():
+                os.environ[key] = str(sec[key]).strip()
+        except Exception:
+            continue
+
+
 def _inject_css() -> None:
     st.markdown(
         """
@@ -342,6 +362,7 @@ def main() -> None:
         initial_sidebar_state="expanded",
         page_icon="📬",
     )
+    _inject_streamlit_secrets_into_env()
     _inject_css()
 
     with st.sidebar:

@@ -213,6 +213,31 @@ Then:
 
 ---
 
+## Deploy (Streamlit Community Cloud)
+
+Free hosting for Streamlit apps tied to your GitHub repo: [Streamlit Community Cloud](https://streamlit.io/cloud).
+
+1. Push this repo to GitHub (already done if you followed earlier steps).  
+2. Sign in at **share.streamlit.io** with GitHub → **New app**.  
+3. Pick your repository and branch **`main`**, main file **`app.py`**.  
+4. **Advanced settings** → Python version **3.10+** if offered.  
+5. **Secrets** (required for generation): open **App settings → Secrets** and add TOML like:
+
+```toml
+GEMINI_API_KEY = "paste-your-google-ai-studio-key-here"
+# optional:
+# GEMINI_MODEL = "gemini-1.5-flash"
+# USE_LANGCHAIN = "true"
+```
+
+6. **Redeploy** after saving secrets.
+
+The app calls `_inject_streamlit_secrets_into_env()` so `GEMINI_API_KEY` from Cloud secrets is copied into `os.environ` for LangChain / Gemini. Locally, **`.env`** still works and is never committed.
+
+**Note:** Log files on Cloud are ephemeral between restarts; use **Audit & exports** downloads for demos. Do **not** paste real keys into the README or GitHub Issues.
+
+---
+
 ## Sample workflow
 
 1. Load `sample_data/invoices.csv` using the button in the UI.  
